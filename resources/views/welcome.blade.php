@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><!-- Basic -->
+<html lang="{{app()->getLocale()}}"><!-- Basic -->
 <head>
   <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">   
@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
  
      <!-- Site Metas -->
-    <title> Buscador de Escuelas</title>  
+    <title> @lang('Buscador de Escuelas')</title>  
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -46,29 +46,16 @@
         </button>
         <div class="collapse navbar-collapse" id="navbars-rs-food">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active"><a class="nav-link" href="{{url('/')}}">Inicio</a></li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Usuarios</a>
-              <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                <a class="dropdown-item" href="{{url('/users/create')}}">Crear Usario</a>
-                <a class="dropdown-item" href="{{url('/users')}}">Lista de Usuarios</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Roles</a>
-              <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                <a class="dropdown-item" href="{{url('/rules/create')}}">Crear Rol</a>
-                <a class="dropdown-item" href="{{url('/rules')}}">Lista de Roles</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Escuelas</a>
-              <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                <a class="dropdown-item" href="{{url('/schools/create')}}">Crear Escuela</a>
-                <a class="dropdown-item" href="{{url('/schools')}}">Lista de Escuelas</a>
-              </div>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            <li class="nav-item active"><a class="nav-link" href="{{url('/') }}">@lang('home.Inicio')
+            </a></li> 
+
+            <li class="nav-item"><a class="nav-link" href="/locale/es"><img src="{{asset('site/images/Peru.png')}}">@lang('ES')
+            </a></li> 
+            <li class="nav-item"><a class="nav-link" href="/locale/en"><img src="{{asset('site/images/uSa.png')}}">@lang('EN')
+            </a></li> 
+            <li class="nav-item "><a class="nav-link" href="{{url('/register/create') }}">@lang('Registrar')
+            </a></li> 
+            <li class="nav-item"><a class="nav-link" href="{{url('/login')}}">@lang('Iniciar Sesion')</a></li>
           </ul>
         </div>
       </div>
@@ -84,10 +71,10 @@
         <div class="container">
           <div class="row">
             <div class="col-md-12">
-              <h1 class="m-b-20"><strong>Escuela de <br> Conductores</strong></h1>
-              <p class="m-b-40">Busca la escuela mas cercana a tu localidad <br>
-              validada por el ministerio de trasnportes.</p>
-              <p><a class="btn btn-lg btn-circle btn-outline-new-white" href="#">Buscar</a></p>
+              <h1 class="m-b-20"><strong>@lang('Escuela de') <br> @lang('Conductores')</strong></h1>
+              <p class="m-b-40">@lang('Busca la escuela mas cercana a tu localidad') <br>
+              @lang('validada por el ministerio de trasnportes.')</p>
+              <p><a class="btn btn-lg btn-circle btn-outline-new-white" href="#">@lang('Buscar')</a></p>
             </div>
           </div>
         </div>
@@ -96,11 +83,11 @@
         <img src="{{asset('site/images/slider-02.jpg')}}" alt="">
         <div class="container">
           <div class="row">
-            <div class="col-md-12">
-              <h1 class="m-b-20"><strong>Escuela de <br> Conductores </strong></h1>
-              <p class="m-b-40">Busca la escuela mas cercana a tu localidad <br> 
-              validada por el ministerio de trasnportes.</p>
-              <p><a class="btn btn-lg btn-circle btn-outline-new-white" href="#">Buscar</a></p>
+           <div class="col-md-12">
+              <h1 class="m-b-20"><strong>@lang('Escuela de') <br> @lang('Conductores')</strong></h1>
+              <p class="m-b-40">@lang('Busca la escuela mas cercana a tu localidad') <br>
+              @lang('validada por el ministerio de trasnportes.')</p>
+              <p><a class="btn btn-lg btn-circle btn-outline-new-white" href="#">@lang('Buscar')</a></p>
             </div>
           </div>
         </div>
@@ -110,10 +97,10 @@
         <div class="container">
           <div class="row">
             <div class="col-md-12">
-              <h1 class="m-b-20"><strong>Escuela de<br> Conductores</strong></h1>
-              <p class="m-b-40">Busca la escuela mas cercana a tu localidad <br> 
-              validada por el ministerio de trasnportes.</p>
-              <p><a class="btn btn-lg btn-circle btn-outline-new-white" href="#">Buscar</a></p>
+              <h1 class="m-b-20"><strong>@lang('Escuela de') <br> @lang('Conductores')</strong></h1>
+              <p class="m-b-40">@lang('Busca la escuela mas cercana a tu localidad') <br>
+              @lang('validada por el ministerio de trasnportes.')</p>
+              <p><a class="btn btn-lg btn-circle btn-outline-new-white" href="#">@lang('Buscar')</a></p>
             </div>
           </div>
         </div>
@@ -127,16 +114,18 @@
   <!-- End slides -->
   
   <!-- Start About -->
+  <br>
+  <br>
   <div >
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 text-center">
           <div class="inner-column">
-            <h1>Escuela de Conductores <span> - M. de Transportes</span></h1>
+            <h1>@lang('Escuela de Conductores') <span> @lang('- M. de Transportes')</span></h1>
             <h4></h4>
-            <p>Este aplicativo web tiene como proposito proveer que los usuarios puedan buscar escuelas de condictores validadas por el gobierno, de esta manera los usuarios tendran un servicio de calidad </p>
+            <p>@lang('Este aplicativo web tiene como proposito proveer que los usuarios puedan buscar escuelas de condictores validadas por el gobierno, de esta manera los usuarios tendran un servicio de calidad') </p>
             
-            <a class="btn btn-lg btn-circle btn-outline-new-white" href="#">ESCUELAS</a>
+            <a class="btn btn-lg btn-circle btn-outline-new-white" href="#">@lang('ESCUELAS')</a>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -145,6 +134,8 @@
       </div>
     </div>
   </div>
+  <br>
+  <br>
   <!-- End About -->
 
   <!-- Start Contact info -->

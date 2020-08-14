@@ -1,3 +1,6 @@
+@extends('layouts.app')
+@section('content')
+
 <!DOCTYPE html>
 <html lang="en"><!-- Basic -->
 <head>
@@ -8,7 +11,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
  
      <!-- Site Metas -->
-    <title> Buscador de Escuelas</title>  
+    <title> @lang('Buscador de Escuelas')</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -31,11 +34,19 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script src="{{asset('js/jquery-2.1.0.min.js')}}"></script>
+     <script src="{{asset('js/marcus.js')}}"></script>
+
 </head>
 
 <body>
 	<!-- Start header -->
-	 <header class="top-navbar">
+	 @if(Session::has('alertas'))
+	 <div align='center' style="background-color:red;color:white;font-size:120%;">
+                {{ Session::get('alertas') }}
+     </div>
+     @endif
+	<header class="top-navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
         <a class="navbar-brand" href="index.html">
@@ -46,29 +57,47 @@
         </button>
         <div class="collapse navbar-collapse" id="navbars-rs-food">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active"><a class="nav-link" href="{{url('/')}}">Inicio</a></li>
+            <li class="nav-item active"><a class="nav-link" href="{{url('/')}}">@lang('Inicio')
+            </a></li>
+            @if(auth()->user()->rules_id == 2)
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Usuarios</a>
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">@lang('Usuarios')</a>
               <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                <a class="dropdown-item" href="{{url('/users/create')}}">Crear Usario</a>
-                <a class="dropdown-item" href="{{url('/users')}}">Lista de Usuarios</a>
+                <a class="dropdown-item" href="{{url('/users/create')}}">@lang('Crear Usario')</a>
+                <a class="dropdown-item" href="{{url('/users')}}">@lang('Lista de Usuarios')</a>
               </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Roles</a>
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">@lang('Roles')</a>
               <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                <a class="dropdown-item" href="{{url('/rules/create')}}">Crear Rol</a>
-                <a class="dropdown-item" href="{{url('/rules')}}">Lista de Roles</a>
+                <a class="dropdown-item" href="{{url('/rules/create')}}">@lang('Crear Rol')</a>
+                <a class="dropdown-item" href="{{url('/rules')}}">@lang('Lista de Roles')</a>
               </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Escuelas</a>
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">@lang('Escuelas')</a>
               <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                <a class="dropdown-item" href="{{url('/schools/create')}}">Crear Escuela</a>
-                <a class="dropdown-item" href="{{url('/schools')}}">Lista de Escuelas</a>
+                <a class="dropdown-item" href="{{url('/schools/create')}}">@lang('Crear Escuela')</a>
+                <a class="dropdown-item" href="{{url('/schools')}}">@lang('Lista de Escuelas')</a>
               </div>
             </li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+             <li class="nav-item "><a class="nav-link" href="{{url('/reports')}}">@lang('Reporte')
+            </a></li>
+            @endif
+             @if(auth()->user()->rules_id == 1)
+             <li class="nav-item"><a class="nav-link" href="{{url('/schools')}}">@lang('Lista de Escuelas')
+            </a></li>
+             <li class="nav-item"><a class="nav-link" href="{{url('/schools/create')}}">@lang('Crear Escuela')
+            </a></li>
+            <li class="nav-item"><a class="nav-link" href=""> @lang('Buscar Escuelas')</a></li>
+
+            @endif
+            <li class="nav-item"><a class="nav-link" href="/locale/es"><img src="{{asset('site/images/Peru.png')}}">@lang('ES')
+            </a></li> 
+            <li class="nav-item"><a class="nav-link" href="/locale/en"><img src="{{asset('site/images/uSa.png')}}">@lang('EN')
+            </a></li> 
+            <li class="nav-item "><a class="nav-link" href="{{url('/school/busqueda')}}">@lang('Buscador')
+            </a></li>
           </ul>
         </div>
       </div>
@@ -81,7 +110,7 @@
 		<div class="container text-center">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Escuelas</h1>
+					<h1>@lang('Escuelas')</h1>
 				</div>
 			</div>
 		</div>
@@ -94,8 +123,8 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="heading-title text-center">
-						<h2>Escuela</h2>
-						<p>Crear Escuela</p>
+						<h2>@lang('Escuela')</h2>
+						<p>@lang('Crear Escuela')</p>
 					</div>
 				</div>
 			</div>
@@ -106,43 +135,69 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
-									<input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required data-error="Ingrese su nombre">
+									<input type="text" class="form-control" id="name" name="name" placeholder="@lang('Nombre')" required data-error="Ingrese su nombre">
 									<div class="help-block with-errors"></div>
 								</div>                                 
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
 									<input type="integer"  id="ruc"  name="ruc" class="form-control"
-									placeholder="RUC" required data-error="Ingresa su numero RUC">
+									placeholder="@lang('RUC')" required data-error="Ingresa su numero RUC">
 									<div class="help-block with-errors"></div>
 								</div> 
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
 									<select  id="departament"  name ="departament" required data-error="Seleccione su departamento" class="custom-select d-block form-control">
-										<option disabled selected>Seleccione su Departamento</option>
+										<option disabled selected>@lang('Seleccione su Departamento')</option>
 										@foreach($departamentos as $departament)
-	                                      <option value="{{$departament['departaments']}}">{{$departament['departaments']}}</option>
+	                                      <option value="{{$departament['departaments']}}">
+
+	                                      {{$departament['departaments']}}</option>
 	                                    @endforeach
 									</select>
 									<div class="help-block with-errors"></div>
 								</div> 
 							</div>
+							<script >
+								$("#departament").change(event => {
+	                                 $.get(`/schools/create/${event.target.value}`, function(res, sta){
+		                                   $("#province").empty();
+		                                   $("#city").empty();
+		                                    $("#province").append(`<option value=SELECT> @lang('SELECCIONE UNA PROVINCIA DE') ${event.target.value}</option>`);
+		                                       res.forEach(element => {
+		                                   	$("#province").append(`<option value=${element.province}> ${element.province} </option>`);
+		                             });
+	                              });
+                                });
+							</script>
 							<div class="col-md-12">
 								<div class="form-group">
 									<select id="province"  name ="province" class="custom-select d-block form-control" required data-error="Selecciones su provincia">
-										 <option disabled selected>Seleccione su Provincia</option>
+										 <option disabled selected>@lang('Seleccione su Provincia')</option>
 										@foreach($provincias as $province)
-											<option value="{{$province['province']}}">{{$province['province']}}</option>
+											<option value="{{$province['province']}}">
+											{{$province['province']}}</option>
 										@endforeach
 									</select>
 									<div class="help-block with-errors"></div>
 								</div> 
 							</div>
+							<script>
+								$("#province").change(event => {
+	                               $.get(`/schools/create/city/${event.target.value}`, function(res, sta){
+		                           $("#city").empty();
+		                           $("#city").append(`<option value=Select> @lang('SELECCIONE UN DISTRITO DE') ${event.target.value} </option>`);
+		                             res.forEach(element => {
+			                       $("#city").append(`<option value=${element.city}> ${element.city} </option>`);
+		                           });
+	                            });
+                               });
+							</script>
 							<div class="col-md-12">
 								<div class="form-group">
 									<select id="city"  name ="city" class="custom-select d-block form-control"  required data-error="Seleccione su ciudad">
-									  <option disabled selected>Seleccione su Ciudad</option>
+									  <option disabled selected>@lang('Seleccione su Ciudad')</option>
 									  @foreach($distritos as $distrito)
 											<option value="{{$distrito['city']}}">{{$distrito['city']}}</option>
 									@endforeach
@@ -152,7 +207,7 @@
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<input type="text" class="form-control" id="address" name="address" placeholder="Direccion" required data-error="Ingrese su direccion">
+									<input type="text" class="form-control" id="address" name="address" placeholder="@lang('Direccion')" required data-error="Ingrese su direccion">
 									<div class="help-block with-errors"></div>
 								</div>                                 
 							</div>
@@ -162,12 +217,7 @@
 									<div class="help-block with-errors"></div>
 								</div>                                 
 							</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<input type="integer" id="status" name="status"class="form-control"  placeholder="Estado" required data-error="Ingrese su Estado">
-									<div class="help-block with-errors"></div>
-								</div>                                 
-							</div>
+							
 							<div class="col-md-12">
 								<div class="submit-button text-center">
 									<input type="submit" name="Agregar">
@@ -306,3 +356,4 @@
 	</script>
 </body>
 </html>
+@endsection

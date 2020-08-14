@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en"><!-- Basic -->
 <head>
@@ -8,7 +11,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
  
      <!-- Site Metas -->
-    <title> Buscador de Escuelas</title>  
+    <title> @lang('Buscador de Escuelas')</title> 
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -46,29 +49,37 @@
         </button>
         <div class="collapse navbar-collapse" id="navbars-rs-food">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active"><a class="nav-link" href="{{url('/')}}">Inicio</a></li>
+            <li class="nav-item active"><a class="nav-link" href="{{url('/')}}">@lang('Inicio')
+            </a></li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Usuarios</a>
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">@lang('Usuarios')</a>
               <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                <a class="dropdown-item" href="{{url('/users/create')}}">Crear Usario</a>
-                <a class="dropdown-item" href="{{url('/users')}}">Lista de Usuarios</a>
+                <a class="dropdown-item" href="{{url('/users/create')}}">@lang('Crear Usario')</a>
+                <a class="dropdown-item" href="{{url('/users')}}">@lang('Lista de Usuarios')</a>
               </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Roles</a>
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">@lang('Roles')</a>
               <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                <a class="dropdown-item" href="{{url('/rules/create')}}">Crear Rol</a>
-                <a class="dropdown-item" href="{{url('/rules')}}">Lista de Roles</a>
+                <a class="dropdown-item" href="{{url('/rules/create')}}">@lang('Crear Rol')</a>
+                <a class="dropdown-item" href="{{url('/rules')}}">@lang('Lista de Roles')</a>
               </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Escuelas</a>
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">@lang('Escuelas')</a>
               <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                <a class="dropdown-item" href="{{url('/schools/create')}}">Crear Escuela</a>
-                <a class="dropdown-item" href="{{url('/schools')}}">Lista de Escuelas</a>
+                <a class="dropdown-item" href="{{url('/schools/create')}}">@lang('Crear Escuela')</a>
+                <a class="dropdown-item" href="{{url('/schools')}}">@lang('Lista de Escuelas')</a>
               </div>
             </li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+             <li class="nav-item "><a class="nav-link" href="{{url('/reports')}}">@lang('Reporte')
+            </a></li>
+            <li class="nav-item"><a class="nav-link" href="/locale/es"><img src="{{asset('site/images/Peru.png')}}">@lang('ES')
+            </a></li> 
+            <li class="nav-item"><a class="nav-link" href="/locale/en"><img src="{{asset('site/images/uSa.png')}}">@lang('EN')
+            </a></li> 
+            <li class="nav-item "><a class="nav-link" href="{{url('/school/busqueda')}}">@lang('Buscador')
+            </a></li>
           </ul>
         </div>
       </div>
@@ -81,7 +92,7 @@
         <div class="container text-center">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1>Usuarios</h1>
+                    <h1>@lang('Usuarios')</h1>
                 </div>
             </div>
         </div>
@@ -94,8 +105,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="heading-title text-center">
-                        <h2>Usuarios</h2>
-                        <p>Lista de Usuarios</p>
+                        <h2>@lang('Usuarios')</h2>
+                        <p>@lang('Lista de Usuarios')</p>
                     </div>
                 </div>
             </div>
@@ -106,16 +117,15 @@
 
 <thead>
      <tr>
-    <td>Id</td>
-    <td>Imagen</td>
-    <td>Nombre</td>
-    <td>Rol</td>
-    <td>Correo Electronico</td>
-    <td>contraseña</td>
-    <td>Departamento</td>
-    <td>Provincia</td>
-    <td>Ciudad</td>
-    <td>Acciones</td>
+    <td>ID</td>
+    <td>@lang('Imagen')</td>
+    <td>@lang('Nombre')</td>
+    <td>@lang('Rol')</td>
+    <td>@lang('Correo Electronico')</td>
+    <td>@lang('Departamento')</td>
+    <td>@lang('Provincia')</td>
+    <td>@lang('Ciudad')</td>
+    <td>@lang('Acciones')</td>
    
   </tr>
 </thead>
@@ -130,16 +140,15 @@
         <td>{{$user->name}}</td>
         <td>{{$user->rules_id}}</td>
         <td>{{$user->email}}</td>
-        <td>{{$user->password}}</td>
         <td>{{$user->departament}}</td>
         <td>{{$user->province}}</td>
         <td>{{$user->city}}</td>
         <td>
-         <a href="{{ url('/users/'.$user->id.'/edit')}}">Editar</a> | 
+         <a href="{{ url('/users/'.$user->id.'/edit')}}">@lang('Editar')</a> | 
             <form method="post" action="{{url('/users/'.$user->id)}}"> 
             {{csrf_field()}}
             {{method_field('DELETE')}}
-            <button type="submit" onclick="return confirm('Desea borrar este campo');">Borrar</button>
+            <button type="submit" onclick="return confirm('@lang('Desea borrar este campo')');">@lang('Borrar')</button>
         </form></td>
 
     </tr>
@@ -147,11 +156,16 @@
 </tbody>
  
 </table>
+
+
+<div style="align-content: center;">{{$users->render()}}  </div>
                     
                 </div>
             </div>
+
         </div>
     </div>
+
     <!-- End Contact -->
     
 
@@ -277,3 +291,4 @@
     </script>
 </body>
 </html>
+@endsection

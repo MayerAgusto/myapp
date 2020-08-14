@@ -1,3 +1,5 @@
+@extends('layouts.app')
+@section('content')
 <!DOCTYPE html>
 <html lang="en"><!-- Basic -->
 <head>
@@ -8,7 +10,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
  
      <!-- Site Metas -->
-    <title> Buscador de Escuelas</title>  
+    <title> @lang('Buscador de Escuelas')</title>  
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -25,7 +27,8 @@
     <link rel="stylesheet" href="{{asset('site/css/responsive.css')}}">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{asset('site/css/custom.css')}}">
-
+<script src="{{asset('js/jquery-2.1.0.min.js')}}"></script>
+     <script src="{{asset('js/marcus.js')}}"></script>
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -46,29 +49,37 @@
         </button>
         <div class="collapse navbar-collapse" id="navbars-rs-food">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active"><a class="nav-link" href="{{url('/')}}">Inicio</a></li>
+            <li class="nav-item active"><a class="nav-link" href="{{url('/')}}">@lang('Inicio')
+            </a></li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Usuarios</a>
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">@lang('Usuarios')</a>
               <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                <a class="dropdown-item" href="{{url('/users/create')}}">Crear Usario</a>
-                <a class="dropdown-item" href="{{url('/users')}}">Lista de Usuarios</a>
+                <a class="dropdown-item" href="{{url('/users/create')}}">@lang('Crear Usario')</a>
+                <a class="dropdown-item" href="{{url('/users')}}">@lang('Lista de Usuarios')</a>
               </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Roles</a>
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">@lang('Roles')</a>
               <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                <a class="dropdown-item" href="{{url('/rules/create')}}">Crear Rol</a>
-                <a class="dropdown-item" href="{{url('/rules')}}">Lista de Roles</a>
+                <a class="dropdown-item" href="{{url('/rules/create')}}">@lang('Crear Rol')</a>
+                <a class="dropdown-item" href="{{url('/rules')}}">@lang('Lista de Roles')</a>
               </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Escuelas</a>
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">@lang('Escuelas')</a>
               <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                <a class="dropdown-item" href="{{url('/schools/create')}}">Crear Escuela</a>
-                <a class="dropdown-item" href="{{url('/schools')}}">Lista de Escuelas</a>
+                <a class="dropdown-item" href="{{url('/schools/create')}}">@lang('Crear Escuela')</a>
+                <a class="dropdown-item" href="{{url('/schools')}}">@lang('Lista de Escuelas')</a>
               </div>
             </li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+             <li class="nav-item "><a class="nav-link" href="{{url('/reports')}}">@lang('Reporte')
+            </a></li>
+            <li class="nav-item"><a class="nav-link" href="/locale/es"><img src="{{asset('site/images/Peru.png')}}">@lang('ES')
+            </a></li> 
+            <li class="nav-item"><a class="nav-link" href="/locale/en"><img src="{{asset('site/images/uSa.png')}}">@lang('EN')
+            </a></li> 
+            <li class="nav-item "><a class="nav-link" href="{{url('/school/busqueda')}}">@lang('Buscador')
+            </a></li>
           </ul>
         </div>
       </div>
@@ -81,7 +92,7 @@
 		<div class="container text-center">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Escuelas</h1>
+					<h1>@lang('Escuelas')</h1>
 				</div>
 			</div>
 		</div>
@@ -94,8 +105,8 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="heading-title text-center">
-						<h2>Escuela</h2>
-						<p>Crear Escuela</p>
+						<h2>@lang('Escuela')</h2>
+						<p>@lang('Crear Escuela')</p>
 					</div>
 				</div>
 			</div>
@@ -122,10 +133,10 @@
 								<div class="form-group">
 									<select  id="departament"  name ="departament" required data-error="Seleccione su departamento" class="custom-select d-block form-control">
 										@foreach($departamentos as $departament)
-										@if($departament->departaments == $data->departaments)
+										@if($departament->departaments == $data->departament)
 	                                        <option value="{{$departament['departaments']}}" selected>{{$departament['departaments']}}</option>
 	                                    @endif
-	                                    @if($departament->departaments != $data->departaments)
+	                                    @if($departament->departaments != $data->departament)
 	                                        <option value="{{$departament['departaments']}}" >{{$departament['departaments']}}</option>
 	                                    @endif
 	                                    @endforeach
@@ -133,6 +144,24 @@
 									<div class="help-block with-errors"></div>
 								</div> 
 							</div>
+							<script >
+								$("#departament").change(event => {
+	                                 $.get(`/schools/create/${event.target.value}`, function(res, sta){
+		                                   $("#province").empty();
+		                                   $("#city").empty();
+		                                    $("#province").append(`<option value=SELECT> @lang('SELECCIONE UNA PROVINCIA DE') ${event.target.value}</option>`);
+		                                       res.forEach(element => {
+		                                
+		                                       	if(${element.province} == $data->province){
+		                                   	$("#province").append(`<option value=${element.province} selected> ${element.province} </option>`);
+		                                   	   }
+		                                   	   else{
+		                                   	$("#province").append(`<option value=${element.province} > ${element.province} </option>`);
+		                                   	   }
+		                             });
+	                              });
+                                });
+							</script>
 							<div class="col-md-12">
 								<div class="form-group">
 									<select id="province"  name ="province" class="custom-select d-block form-control" required data-error="Selecciones su provincia">
@@ -149,6 +178,22 @@
 									<div class="help-block with-errors"></div>
 								</div> 
 							</div>
+							<script>
+								$("#province").change(event => {
+	                               $.get(`/schools/create/city/${event.target.value}`, function(res, sta){
+		                           $("#city").empty();
+		                           $("#city").append(`<option value=Select> @lang('SELECCIONE UN DISTRITO DE') ${event.target.value} </option>`);
+		                             res.forEach(element => {
+		                             	if(${element.city} == $data->city){
+		                             		$("#city").append(`<option value=${element.city} selected> ${element.city} </option>`);
+
+		                             	}else{
+		                             		$("#city").append(`<option value=${element.city}> ${element.city} </option>`);
+		                             	}
+		                           });
+	                            });
+                               });
+							</script>
 							<div class="col-md-12">
 								<div class="form-group">
 									<select id="city"  name ="city" class="custom-select d-block form-control"  required data-error="Seleccione su ciudad">
@@ -179,10 +224,24 @@
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<input type="integer" id="status" name="status"class="form-control"  placeholder="Estado" value="{{$data->status}}" required data-error="Ingrese su Estado">
+									<select  id="status"  name ="status" required data-error="Seleccione su departamento" class="custom-select d-block form-control">
+										@if($data->status == 0)
+	                                        <option value="{{$data->status}}" selected>@lang('Invalidado')</option>
+	                                        <option value="1">@lang('Validado')</option>
+
+	                                    @endif
+	                                    @if($data->status == 1)
+	                                       <option value="{{$data->status}}" selected>@lang('Validado')</option>
+	                                        <option value="0">@lang('Invalidado')</option>
+	                                    @endif
+	                            
+									</select>
 									<div class="help-block with-errors"></div>
-								</div>                                 
+								</div> 
 							</div>
+
+
+
 							<div class="col-md-12">
 								<div class="submit-button text-center">
 									<input type="submit" name="Agregar">
@@ -321,3 +380,4 @@
 	</script>
 </body>
 </html>
+@endsection

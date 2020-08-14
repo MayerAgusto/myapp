@@ -18,10 +18,10 @@ class CreateUsersTable extends Migration
             $table->integer('rules_id')->unsigned();
             $table->foreign('rules_id')->references('id')->on('rules');
             $table->string('departament');
-            $table->string('name');
+            $table->string('name',250);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password',250);
             $table->string('province');
             $table->string('city');
             $table->string('image');
